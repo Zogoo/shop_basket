@@ -124,6 +124,10 @@ GEM
     jbuilder (2.11.1)
       activesupport (>= 5.0.0)
     jwt (2.2.2)
+    launchy (2.5.0)
+      addressable (~> 2.7)
+    letter_opener (1.7.0)
+      launchy (~> 2.2)
     listen (3.4.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -339,6 +343,7 @@ DEPENDENCIES
   factory_bot_rails
   faker!
   jbuilder (~> 2.7)
+  letter_opener
   listen (~> 3.3)
   omniauth-facebook
   pg
@@ -364,7 +369,7 @@ DEPENDENCIES
   webpacker (~> 5.0)
 
 RUBY VERSION
-   ruby 2.7.2p137
+   ruby 2.7.0p0
 
 BUNDLED WITH
    2.2.6
