@@ -1,4 +1,26 @@
 Rails.application.routes.draw do
-  devise_for :users
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  root to: 'home#index'
+
+  devise_for :users, controllers: {
+    sessions: 'users/sessions'
+  }
+
+  namespace :users do
+    get 'basket/show'
+    get 'basket/create'
+    get 'basket/add'
+    get 'basket/delete'
+    get 'basket/clean'
+  end
+
+  namespace :users do
+    get 'my_page/index'
+    get 'my_page/checked'
+  end
+  
+  # Home controller
+  get 'home/index'
+  post 'home/search'
+  get 'home/category'
+  get 'home/suggestion'
 end

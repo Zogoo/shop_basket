@@ -32,6 +32,8 @@ gem 'omniauth-facebook'
 gem 'pg'
 # ENV var file management
 gem 'dotenv-rails'
+# Image uploader
+gem 'carrierwave'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
