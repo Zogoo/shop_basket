@@ -40,3 +40,6 @@ vendor/bundle/
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+# Local env files
+.env*
