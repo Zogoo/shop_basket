@@ -8,7 +8,6 @@
 /.bundle
 # Ignore local bundled gems
 vendor/bundle/
-vendor/bundle-bk/
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
