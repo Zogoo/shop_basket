@@ -10,7 +10,56 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_26_152314) do
+ActiveRecord::Schema.define(version: 2021_01_26_160428) do
+
+  create_table "baskets", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "product_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_id"], name: "index_baskets_on_product_id"
+    t.index ["user_id"], name: "index_baskets_on_user_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer "count"
+    t.integer "status"
+    t.integer "product_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_id"], name: "index_orders_on_product_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
+  create_table "product_images", force: :cascade do |t|
+    t.integer "product_id"
+    t.string "image"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_id"], name: "index_product_images_on_product_id"
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.integer "category_id", null: false
+    t.string "name"
+    t.integer "price"
+    t.integer "stock", default: 0, null: false
+    t.integer "delivery_period"
+    t.integer "delivery_type", default: 0, null: false
+    t.integer "dimensions"
+    t.integer "weight"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_products_on_category_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -38,4 +87,10 @@ ActiveRecord::Schema.define(version: 2021_01_26_152314) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "baskets", "products"
+  add_foreign_key "baskets", "users"
+  add_foreign_key "orders", "products"
+  add_foreign_key "orders", "users"
+  add_foreign_key "product_images", "products", on_delete: :cascade
+  add_foreign_key "products", "categories"
 end
