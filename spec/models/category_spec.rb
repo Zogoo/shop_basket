@@ -1,5 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Category, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'create' do
+    context 'with correct params' do
+      let(:category) { build(:category, name: 'Cosmetics') }
+      it 'will save without error' do
+        expect { category.save! }.not_to raise_error
+      end
+    end
+  end
 end
