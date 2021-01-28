@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :order do
+    association :product, strategy: :build
+    association :user, strategy: :build
     count { 1 }
-    status { 1 }
-    product { nil }
-    user { nil }
+    status { 0 }
   end
 end

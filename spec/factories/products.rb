@@ -1,7 +1,9 @@
 FactoryBot.define do
   factory :product do
-    name { "MyString" }
-    description { "MyString" }
-    delivery_period { 1 }
+    association :category, strategy: :create
+
+    name { Faker::Food.fruits }
+    description { Faker::Food.description }
+    delivery_period { Faker::Number.number(digits: 2) }
   end
 end

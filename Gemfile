@@ -27,6 +27,7 @@ gem 'jbuilder', '~> 2.7'
 
 # Devise for authentication
 gem 'devise'
+gem "omniauth", "~> 1.9.1"
 gem 'omniauth-facebook'
 # Database library
 gem 'pg'

@@ -1,6 +1,10 @@
 FactoryBot.define do
   factory :basket do
-    user { nil }
-    product { nil }
+    association :product, strategy: :create
+    association :user, strategy: :create
+
+    trait :with_order do
+      order { create(:order) }
+    end
   end
 end

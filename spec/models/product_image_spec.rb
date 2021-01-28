@@ -1,5 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe ProductImage, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'uploaded image' do
+    context 'when image uploaded' do
+      let(:image) { build(:product_image, :with_image) }
+      it 'will save image successfully' do
+        expect { image.save! }.not_to raise_error
+      end
+    end
+  end
 end
