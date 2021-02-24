@@ -6,15 +6,15 @@
 // All it does is render <div>Hello Vue</div> at the bottom of the page.
 
 import Vue from 'vue'
-import App from '../components/app.vue'
+import Home from '../components/home.vue'
 
 document.addEventListener('DOMContentLoaded', () => {
-  const app = new Vue({
-    render: h => h(App)
+  const home = new Vue({
+    render: h => h(Home)
   }).$mount()
-  document.body.appendChild(app.$el)
+  document.body.appendChild(home.$el)
 
-  console.log(app)
+  console.log(home)
 })
 
 
