@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_26_160428) do
+ActiveRecord::Schema.define(version: 2021_02_24_141056) do
 
   create_table "baskets", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -29,11 +29,25 @@ ActiveRecord::Schema.define(version: 2021_01_26_160428) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "merchants", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+    t.string "mobile"
+    t.boolean "mobile_confirmed"
+    t.string "phone"
+    t.string "phone_confirmed"
+    t.integer "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_merchants_on_name", unique: true
+    t.index ["user_id"], name: "index_merchants_on_user_id"
+  end
+
   create_table "orders", force: :cascade do |t|
-    t.integer "count"
-    t.integer "status", default: 0, null: false
     t.integer "product_id", null: false
     t.integer "user_id", null: false
+    t.integer "count"
+    t.integer "status", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["product_id"], name: "index_orders_on_product_id"
@@ -87,6 +101,7 @@ ActiveRecord::Schema.define(version: 2021_01_26_160428) do
     t.string "first_name"
     t.string "last_name"
     t.integer "status", default: 0, null: false
+    t.integer "is_merchant", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
@@ -98,6 +113,7 @@ ActiveRecord::Schema.define(version: 2021_01_26_160428) do
   add_foreign_key "baskets", "orders"
   add_foreign_key "baskets", "products"
   add_foreign_key "baskets", "users"
+  add_foreign_key "merchants", "users"
   add_foreign_key "orders", "products"
   add_foreign_key "orders", "users"
   add_foreign_key "product_images", "products", on_delete: :cascade
