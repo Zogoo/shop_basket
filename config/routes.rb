@@ -21,6 +21,7 @@ Rails.application.routes.draw do
 
   # Home controller
   get 'home/index'
+  get 'home/all'
   post 'home/search'
   get 'home/category'
   get 'home/suggestion'
