@@ -7,4 +7,15 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 include FactoryBot::Syntax::Methods
 
-create(:user, email: 'user@example.com', password: '!QASZ2wsx')
+# Create sample product
+category = create(:category)
+product = create(:product, category: category)
+
+# Create merchant user
+merchant = create(:user, email: 'merchant@example.com', password: '!QASZ2wsx')
+create(:merchant, user: merchant)
+
+# Create normal user
+user = create(:user, email: 'user@example.com', password: '!QASZ2wsx')
+# Create normal user basket
+basket = create(:basket, user: user, product: product)
