@@ -8,14 +8,22 @@
 include FactoryBot::Syntax::Methods
 
 # Create sample product
-categories= Array.new(100) { create(:category) }
+categories = Array.new(100) do 
+  category = build(:category)
+  category.save if category.valid?
+  Category.find_by_name(category.name)
+end
+
 product = categories.each { |category| create(:product, category: category) }
 
 # Create merchant user
-merchant = create(:user, email: 'merchant@example.com', password: '!QASZ2wsx')
-create(:merchant, user: merchant)
+merchant = build(:user, email: 'merchant@example.com', password: '!QASZ2wsx')
+merchant.save if merchant.valid?
+create(:merchant, user: merchant) if merchant.valid?
 
 # Create normal user
-user = create(:user, email: 'user@example.com', password: '!QASZ2wsx')
+user = build(:user, email: 'user@example.com', password: '!QASZ2wsx')
+user.save if user.valid?
+
 # Create normal user basket
-basket = create(:basket, user: user, product: product)
+basket = create(:basket, user: user, product: product) if user.valid?
