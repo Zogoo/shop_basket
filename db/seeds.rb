@@ -8,8 +8,8 @@
 include FactoryBot::Syntax::Methods
 
 # Create sample product
-category = create(:category)
-product = create(:product, category: category)
+categories= Array.new(100) { create(:category) }
+product = categories.each { |category| create(:product, category: category) }
 
 # Create merchant user
 merchant = create(:user, email: 'merchant@example.com', password: '!QASZ2wsx')
