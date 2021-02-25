@@ -10,6 +10,7 @@ class CreateProducts < ActiveRecord::Migration[6.1]
       t.integer :dimensions
       t.integer :weight
       t.string :description
+      t.text :tags, array: true, default: []
 
       t.timestamps
     end

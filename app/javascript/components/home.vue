@@ -11,6 +11,8 @@
       <p>{{ product.dimension }}</p>
       <p>{{ product.stock }}</p>
     </div>
+    Search: <input v-model="keyword"/>
+    <button v-on:click="search()">Search</button>
   </div>
 </template>
 
@@ -22,7 +24,8 @@ export default {
     return {
       products: [],
       categories: [],
-      basket: {}
+      basket: {},
+      keyword: '',
     }
   },
   mounted (){
@@ -31,6 +34,13 @@ export default {
       this.categories = response.data.categories;
       this.basket     = response.data.basket;
     })
+  },
+  methods: {
+    search: function() {
+      axios.post('/home/search', { keyword: this.keyword }).then((response) => {
+        this.products = response.data.products;
+      })
+    }
   }
 }
 </script>
@@ -39,5 +49,9 @@ export default {
 p {
   font-size: 2em;
   text-align: center;
+}
+input, button {
+  font-size: 14pt;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 </style>
