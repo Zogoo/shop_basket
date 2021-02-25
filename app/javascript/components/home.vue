@@ -19,7 +19,7 @@
     <div class="product-width list list-spacer">
       <div v-for="product in products" :key="product.id" class="list-item">
         <div class="internal-spacer">
-          <img src="//images03.nicepage.io/a1389d7bc73adea1e1c1fb7e/fac7908c33905c35a153783e/1712550709_2_4_16.jpg"
+          <img v-bind:src="product.product_image[0].image.url"
             alt="" class="product-width" data-image-width="1900"
             data-image-height="2532">
           <h5 class="sans_font">{{ product.name }}</h5>
