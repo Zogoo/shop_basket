@@ -10,5 +10,11 @@ FactoryBot.define do
     name { Faker::Food.fruits.downcase }
     description { Faker::Food.description }
     delivery_period { Faker::Number.number(digits: 2) }
+
+    trait(:with_image) do
+      after(:create) do |product|
+        create(:product_image, product: product)
+      end
+    end
   end
 end

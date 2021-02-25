@@ -1,18 +1,33 @@
 <template>
-  <div id="app">
-    <div> Categories </div>
+  <div id="app" class="align-center">
+    <!-- <div> Categories </div>
     <div v-for="category in categories" :key="category.id">
       {{ category.name }}
     </div>
     <div> Products </div>
     <div v-for="product in products" :key="product.id">
-      <p>{{ product.name }}</p>
-      <p>{{ product.price }}</p>
+      <p></p>
+      <p></p>
       <p>{{ product.dimension }}</p>
       <p>{{ product.stock }}</p>
+    </div> -->
+  Search: <input v-model="keyword"/>
+  <button v-on:click="search()">Search</button>
+  <div class="product-list">
+    <h2 class="sans_font">Product list</h2>
+    <div class=""></div>
+    <div class="product-width list list-spacer">
+      <div v-for="product in products" :key="product.id" class="list-item">
+        <div class="internal-spacer">
+          <img src="//images03.nicepage.io/a1389d7bc73adea1e1c1fb7e/fac7908c33905c35a153783e/1712550709_2_4_16.jpg"
+            alt="" class="product-width" data-image-width="1900"
+            data-image-height="2532">
+          <h5 class="sans_font">{{ product.name }}</h5>
+          <h3 class="sans_font">$ {{ product.price }}</h3>
+        </div>
+      </div>
     </div>
-    Search: <input v-model="keyword"/>
-    <button v-on:click="search()">Search</button>
+  </div>
   </div>
 </template>
 
@@ -46,12 +61,110 @@ export default {
 </script>
 
 <style scoped>
-p {
-  font-size: 2em;
+.sans_font {
+  font-family: 'Source Sans Pro', sans-serif !important;
+}
+.align-center {
   text-align: center;
 }
-input, button {
-  font-size: 14pt;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+.product-list {
+  position: relative;
+  width: 1140px;
+  margin: 0 auto;
+}
+@media (min-width: 1200px) {
+  .product-list {
+    width: 1140px;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  .product-list {
+    width: 940px;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .product-list {
+    width: 720px;
+  }
+}
+@media (min-width: 576px) and (max-width: 767px) {
+  .product-list {
+    width: 540px;
+  }
+}
+@media (max-width: 575px) {
+  .product-list {
+    width: 340px;
+  }
+}
+.product-list .product-list {
+  width: 100%;
+}
+
+.product-width {
+  width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+@media (min-width: 1200px) {
+  .product-width-xl {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  .product-width-lg {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .product-width-md {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+@media (min-width: 576px) and (max-width: 767px) {
+  .product-width-sm {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+@media (max-width: 575px) {
+  .product-width-xs {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+/* List creator */
+.list {
+  display: grid;
+  grid-template-columns: repeat(3, 33.33333333%);
+}
+.list-item {
+  display: flex;
+  position: relative;
+}
+.u-tabs:not([class*="u-align-"]),
+.list-item:not([class*="u-align-"]),
+.u-container-style:not([class*="u-align-"]) {
+  text-align: left;
+}
+/* Spacer */
+.list-spacer {
+  min-height: 375px;
+  grid-template-columns: repeat(4, calc(25% - 8px));
+  height: auto;
+  grid-gap: 10px;
+  margin: 30px auto 60px 0;
+}
+/* Internal space */
+.internal-spacer {
+  padding: 10px;
 }
 </style>
