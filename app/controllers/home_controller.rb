@@ -11,7 +11,12 @@ class HomeController < ApplicationController
   end
 
   def search
-    products = Product.search_by_keyword(search_params)
+    if keyword_param.present?
+      products = Product.search_by_keyword(keyword_param)
+    elsif category_param.present?
+      categories = Category.search_by_name(category_param)
+      products = Product.where(category: categories)
+    end
     render json: { products: products }
   end
 
@@ -21,7 +26,11 @@ class HomeController < ApplicationController
 
   private
 
-  def search_params
-    params.permit(:keyword).require(:keyword)
+  def keyword_param
+    params.permit(:keyword).dig(:keyword)
+  end
+
+  def category_param
+    params.permit(:category).dig(:category)
   end
 end

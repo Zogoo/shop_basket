@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :category do
-    name { %w[Cosmetics Food Drink Baby Accessories].sample }
+    name { %w[cosmetics food drink baby accessories].sample }
   end
 end
