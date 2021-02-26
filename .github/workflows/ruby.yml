@@ -35,29 +35,44 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-    container:
-      image: ruby:2.7.0
-      env:
-        RAILS_ENV: test
-        POSTGRES_HOST: postgres
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: password
+    env:
+      RAILS_ENV: test
+      POSTGRES_HOST: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - name: bundler set up
-        run: |
-          gem install bundler
-          bundle install
       - name: install node
         uses: actions/setup-node@v1
         with:
           node-version: '12'
-
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@ec106b438a1ff6ff109590de34ddc62c540232e0
+        with:
+          ruby-version: 2.7.0
+      - name: Cache gems
+        uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gem-
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: bundler set up
+        run: |
+          gem install bundler
+          bundle install --path vendor/bundle --without production
+          yarn install
       - name: db migrate
         run: |
-          bundle exec rails db:migrate
-
+          bundle exec rails db:setup
       - name: verify
         run: |
           bundle exec rubocop
