@@ -19,7 +19,7 @@ services:
       - postgres_rds 
     environment:
       BUNDLE_PATH: /bundler
-      POSTGRES_URL: postgres_rds
+      POSTGRES_HOST: postgres_rds
       POSTGRES_PASSWORD: password
   nginx:
     image: nginx:1.18.0-alpine
