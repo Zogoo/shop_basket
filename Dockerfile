@@ -31,7 +31,7 @@ ENV RAILS_ENV=production
 ENV NODE_ENV=production 
 
 RUN gem update --system 3.2.6
-RUN gem install --force bundler -v '2.2.7'
+RUN gem install --force bundler -v '2.2.11'
 RUN bundle install
 RUN rm -rf /usr/local/bundle/cache/*.gem \
   && find /usr/local/bundle/gems/ -name "*.c" -delete \
