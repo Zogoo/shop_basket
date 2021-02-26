@@ -1,0 +1,41 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  Exclude:
+    - 'db/**/*'
+    - 'db/migrate/*.rb'
+    - 'config/**/*'
+    - 'script/**/*'
+    - 'bin/**/*'
+    - 'bin/{rails,rake,spring}'
+    - spec/spec_helper.rb
+    - spec/rails_helper.rb
+    - spec/factories/*
+    - lib/tasks/*.rake
+    - config/routes.rb
+    - bundler/**/*
+    - vendor/bundle/**/**
+    - node_modules/**/*
+    - tmp/**/*
+    - Gemfile
+    - Rakefile
+    - config.ru
+  NewCops: enable
+
+Style/FrozenStringLiteralComment:
+  Description: 'I would like to use private indentation'
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+  Exclude:
+    - 'app/channels/application_cable/{channel.rb,connection.rb}'
+
+Metrics/BlockLength:
+  Max: 50
+
+Metrics/AbcSize:
+  Max: 20

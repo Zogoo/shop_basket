@@ -1,8 +1,7 @@
 class HomeController < ApplicationController
   protect_from_forgery with: :null_session
 
-  def index
-  end
+  def index; end
 
   def all
     categories = Category.all
@@ -16,11 +15,9 @@ class HomeController < ApplicationController
     render json: { products: products }
   end
 
-  def category
-  end
+  def category; end
 
-  def suggestion
-  end
+  def suggestion; end
 
   private
 

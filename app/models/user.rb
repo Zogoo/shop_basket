@@ -13,13 +13,13 @@ class User < ApplicationRecord
     user = User.where(uid: auth.uid, provider: auth.provider).first
 
     user ||= User.create(
-              uid:        auth.uid,
-              provider:   auth.provider,
-              email:      auth.info.email,
-              first_name: auth.info.name,
-              password:   Devise.friendly_token[0, 20],
-              icon:      auth.info.image
-            )
+      uid: auth.uid,
+      provider: auth.provider,
+      email: auth.info.email,
+      first_name: auth.info.name,
+      password: Devise.friendly_token[0, 20],
+      icon: auth.info.image
+    )
 
     user
   end

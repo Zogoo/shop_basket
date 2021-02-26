@@ -8,5 +8,5 @@ RSpec.describe User, type: :model do
         expect { user.save! }.not_to raise_error
       end
     end
-  end 
+  end
 end
