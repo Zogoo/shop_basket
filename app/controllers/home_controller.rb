@@ -6,7 +6,7 @@ class HomeController < ApplicationController
   def all
     categories = Category.all
     products = JSON.parse(Product.all.to_json(include: :product_image))
-    basket = Basket.new
+    basket = Basket.all
     render json: { categories: categories, products: products, basket: basket }
   end
 

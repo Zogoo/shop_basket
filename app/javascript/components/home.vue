@@ -1,17 +1,18 @@
 <template>
   <div id="app" class="align-center">
+  <h2 class="sans_font">Product list</h2>
+  <div class="">
+    Search: <input v-model="keyword"/>
+    <button v-on:click="search()">Search</button>
+  </div>
+  <div class="icon-list">
+    <div class="icon" v-for="category in categories" :key="category.id" v-on:click="search_by_category(category.name)">
+      <div :class="'category-icons icon-' + [category.name.toLowerCase()]"/>
+      <span>{{ category.name }}</span>
+    </div>
+  </div>
+  <h1>SUM: {{ sum_basket }}</h1>
   <div class="product-list">
-    <h2 class="sans_font">Product list</h2>
-    <div class="">
-      Search: <input v-model="keyword"/>
-      <button v-on:click="search()">Search</button>
-    </div>
-    <div class="icon-list">
-      <div class="icon" v-for="category in categories" :key="category.id" v-on:click="search_by_category(category.name)">
-        <div :class="'category-icons icon-' + [category.name.toLowerCase()]"/>
-        <span>{{ category.name }}</span>
-      </div>
-    </div>
     <div class="product-width list list-spacer">
       <div v-for="product in products" :key="product.id" class="list-item">
         <div class="internal-spacer">
@@ -20,6 +21,7 @@
             data-image-height="2532">
           <h5 class="sans_font">{{ product.name }}</h5>
           <h3 class="sans_font">$ {{ product.price }}</h3>
+          <div class="basket-icon" v-on:click="add_into_basket(product)"></div>
         </div>
       </div>
     </div>
@@ -33,9 +35,10 @@ import axios from 'axios';
 export default {
   data: function () {
     return {
+      basket_sum: 0,
       products: [],
       categories: [],
-      basket: {},
+      basket: [],
       keyword: '',
     }
   },
@@ -45,6 +48,11 @@ export default {
       this.categories = response.data.categories;
       this.basket     = response.data.basket;
     })
+  },
+  computed: {
+    sum_basket: function() {
+      return this.basket.reduce((sum, {price}) => sum + price, 0)
+    }
   },
   methods: {
     search: function() {
@@ -56,6 +64,9 @@ export default {
       axios.post('/home/search', { category: category_name }).then((response) => {
         this.products = response.data.products;
       })
+    },
+    add_into_basket: function(product) {
+      this.basket.push(product);
     }
   }
 }
@@ -202,5 +213,13 @@ export default {
 	background: url('/assets/shop-icons-white.png') no-repeat -2703px -616px;
 	width: 251px;
 	height: 250px;
+}
+
+/* Basket */
+.basket-icon {
+  background: url('/assets/shop-icons-white.png') no-repeat -616px -316px;
+	width: 251px;
+	height: 250px;
+  zoom: 0.2;
 }
 </style>
