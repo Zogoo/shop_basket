@@ -35,11 +35,13 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-    env:
-      RAILS_ENV: test
-      POSTGRES_HOST: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+    container:
+      image: ruby:2.7.0
+      env:
+        RAILS_ENV: test
+        POSTGRES_HOST: postgres
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: password
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -47,10 +49,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '12'
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@ec106b438a1ff6ff109590de34ddc62c540232e0
-        with:
-          ruby-version: 2.7.0
       - name: Cache gems
         uses: actions/cache@v1
         with:
