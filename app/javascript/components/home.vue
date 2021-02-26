@@ -11,11 +11,12 @@
       <p>{{ product.dimension }}</p>
       <p>{{ product.stock }}</p>
     </div> -->
-  Search: <input v-model="keyword"/>
-  <button v-on:click="search()">Search</button>
   <div class="product-list">
     <h2 class="sans_font">Product list</h2>
-    <div class=""></div>
+    <div class="">
+      Search: <input v-model="keyword"/>
+      <button v-on:click="search()">Search</button>
+    </div>
     <div class="product-width list list-spacer">
       <div v-for="product in products" :key="product.id" class="list-item">
         <div class="internal-spacer">

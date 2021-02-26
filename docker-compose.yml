@@ -1,0 +1,43 @@
+version: '3'
+x-internal_dockerfile: &internal_dockerfile
+  build:
+    context: ./
+    dockerfile: Dockerfile
+services:
+  rails:
+    <<: *internal_dockerfile
+    container_name: shop-basket-rails
+    volumes:
+      - bundler-cache:/bundler
+      - .:/app
+    working_dir: /app
+    links:
+      - nginx
+      - postgres_rds
+    depends_on:
+      - nginx
+      - postgres_rds 
+    environment:
+      BUNDLE_PATH: /bundler
+      POSTGRES_URL: postgres_rds
+      POSTGRES_PASSWORD: password
+  nginx:
+    image: nginx:1.18.0-alpine
+    container_name: shop-basket-nginx
+    volumes:
+      - .:/app
+      - ./devops/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - '443:443'
+    command: nginx-debug -g 'daemon off;'
+  postgres_rds:
+    image: postgres:12.6-alpine
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: basket_production
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+
+volumes:
+  bundler-cache:
