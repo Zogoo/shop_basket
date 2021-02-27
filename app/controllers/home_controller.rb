@@ -12,10 +12,10 @@ class HomeController < ApplicationController
 
   def search
     if keyword_param.present?
-      products = Product.search_by_keyword(keyword_param)
+      products = JSON.parse(Product.search_by_keyword(keyword_param).to_json(include: :product_image))
     elsif category_param.present?
       categories = Category.search_by_name(category_param)
-      products = Product.where(category: categories)
+      products = JSON.parse(Product.where(category: categories).to_json(include: :product_image))
     end
     render json: { products: products }
   end

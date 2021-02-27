@@ -1,36 +1,48 @@
 <template>
   <div id="app" class="align-center">
-  <h2 class="sans_font">Product list</h2>
-  <div class="">
-    Search: <input v-model="keyword"/>
-    <button v-on:click="search()">Search</button>
-  </div>
-  <div class="icon-list">
-    <div class="icon" v-for="category in categories" :key="category.id" v-on:click="search_by_category(category.name)">
-      <div :class="'category-icons icon-' + [category.name.toLowerCase()]"/>
-      <span>{{ category.name }}</span>
-    </div>
-  </div>
-  <h1>SUM: {{ sum_basket }}</h1>
-  <div class="product-list">
-    <div class="product-width list list-spacer">
-      <div v-for="product in products" :key="product.id" class="list-item">
-        <div class="internal-spacer">
-          <img v-bind:src="product.product_image[0].image.url"
-            alt="" class="product-width" data-image-width="1900"
-            data-image-height="2532">
-          <h5 class="sans_font">{{ product.name }}</h5>
-          <h3 class="sans_font">$ {{ product.price }}</h3>
-          <div class="basket-icon" v-on:click="add_into_basket(product)"></div>
+    <div class="product-list">
+      <div class="head-text sans_font line-spacer">Product list</div>
+      <div class="search-bar line-spacer">
+        <input v-on:keyup.enter="search()" v-model="keyword"/>
+        <button v-on:click="search()"><i class="fa fa-search" aria-hidden="true"></i>Search</button>
+      </div>
+      <div class="icon-list">
+        <div class="icon" v-for="category in categories" :key="category.id" v-on:click="search_by_category(category.name)">
+          <div :class="'category-icons icon-' + [category.name.toLowerCase()]"/>
+          <span>{{ category.name }}</span>
+        </div>
+      </div>
+      <div class="product-width list list-spacer">
+        <div v-for="product in products" :key="product.id" class="list-item">
+          <div class="internal-spacer">
+            <img v-bind:src="product.product_image[0].image.url"
+              alt="" class="product-width" data-image-width="1900"
+              data-image-height="2532">
+            <div class="description grid-line">
+              <div class="sans_font first-row">{{ product.name }}</div>
+              <div class="sans_font second-row">$ {{ product.price }}</div>
+              <div class="basket-icon merged-row" v-on:click="add_into_basket(product)"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+    <div class="float-in-right-corner">
+      <div class="shopping-cart"></div>
+      <div class="cart-text">
+        COUNT: {{ basket_count }}
+      </div>
+      <div class="cart-text">
+        TOTAL: {{ basket_total }}
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import '@fortawesome/fontawesome-free/css/all.css'
+import '@fortawesome/fontawesome-free/js/all.js'
 
 export default {
   data: function () {
@@ -50,8 +62,11 @@ export default {
     })
   },
   computed: {
-    sum_basket: function() {
-      return this.basket.reduce((sum, {price}) => sum + price, 0)
+    basket_total: function() {
+      return this.basket.reduce((sum, {price}) => sum + price, 0);
+    },
+    basket_count: function() {
+      return this.basket.length;
     }
   },
   methods: {
@@ -79,6 +94,13 @@ export default {
 .align-center {
   text-align: center;
 }
+.head-text {
+  font-size: 1cm;
+}
+.line-spacer {
+  padding-bottom: 30px;
+}
+/* General UI size */
 .product-list {
   position: relative;
   width: 1140px;
@@ -153,7 +175,24 @@ export default {
     margin-right: 0 !important;
   }
 }
-/* List creator */
+/* Search bar */
+.search-bar input{
+  font-size: 1.2em;
+  width: 40vw;
+  border-radius: 5px;
+  border-width: 1px;
+}
+.search-bar i {
+  color:blue;
+}
+.search-bar button {
+  border-radius: 5px;
+  border-width: 1px;
+  box-shadow: #555555;
+  height: 2em;
+  background-color: rgb(175, 205, 245);
+}
+/* Product list */
 .list {
   display: grid;
   grid-template-columns: repeat(3, 33.33333333%);
@@ -179,14 +218,41 @@ export default {
 .internal-spacer {
   padding: 10px;
 }
-
-/* Icons */
+/* Production description */
+.grid-line {
+  display: grid;
+  grid-template-rows: 30px 30px;
+  grid-template-columns: 140px 1fr;
+}
+.grid-line .first-row {
+  grid-row: 1/2;
+  grid-column: 1/2;
+}
+.grid-line .second-row {
+  padding-top: 5px;
+  grid-row: 2/2;
+  grid-column: 1/2;
+}
+.grid-line .merged-row {
+  grid-row: 1/2;
+  grid-column: 2/2;
+}
+.basket-icon {
+  background: url('/assets/shop-icons-white.png') no-repeat -616px -316px;
+	width: 251px;
+	height: 250px;
+  zoom: 0.2;
+}
+/* Category list */
+.icon-list {
+  display: inline-flex;
+}
 .icon-list .icon {
-  float: left;
+  padding-right: 100px;
 }
 .category-icons {
   cursor: pointer;
-  zoom:0.5;
+  zoom: 0.2;
 }
 .icon-cosmetics {
   background: url('/assets/shop-icons-white.png') no-repeat;
@@ -214,12 +280,22 @@ export default {
 	width: 251px;
 	height: 250px;
 }
-
-/* Basket */
-.basket-icon {
-  background: url('/assets/shop-icons-white.png') no-repeat -616px -316px;
+/* Shopping basket */
+.shopping-cart {
+  background: url('/assets/shop-icons-white.png') no-repeat -2703px -16px;
 	width: 251px;
 	height: 250px;
-  zoom: 0.2;
+  zoom: 0.45;
+  cursor: pointer;
+}
+.float-in-right-corner {
+  position: fixed;
+  top: 80vh;
+  left: 90vw;
+}
+.cart-text {
+  vertical-align: text-bottom;
+  font-size: 1em;
+  font-weight: 100;
 }
 </style>
