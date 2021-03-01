@@ -9,8 +9,12 @@
     "axios": "^0.21.1",
     "turbolinks": "^5.2.0",
     "vue": "^2.6.12",
+    "vue-flash-message": "^0.7.2",
     "vue-loader": "^15.9.6",
-    "vue-template-compiler": "^2.6.12"
+    "vue-router": "^3.5.1",
+    "vue-template-compiler": "^2.6.12",
+    "vuetify": "^2.4.5",
+    "vuex": "^3.6.2"
   },
   "version": "0.1.0",
   "devDependencies": {
