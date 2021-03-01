@@ -41,8 +41,8 @@
               </template>
               <v-img
                 height="250"
-                zoom="0.2"
                 :src="product.product_image[0].image.url"
+                @click="show_detail = !show_detail"
               ></v-img>
               <v-card-title>{{ product.name }}</v-card-title>
               <v-card-text>
@@ -108,6 +108,19 @@
         TOTAL: {{ basket_total }}
       </div>
     </div>
+    <v-overlay
+      :absolute="absolute"
+      :value="show_detail"
+    >
+<!-- TODO: Floating detail screen -->
+          <v-btn
+            color="success"
+            class="mt-12"
+            @click="show_detail = false"
+          >
+            BACK TO LIST
+          </v-btn>
+    </v-overlay>
   </div>
 </template>
 
@@ -120,6 +133,8 @@ import '@fortawesome/fontawesome-free/js/all.js'
 export default {
   data: function () {
     return {
+      absolute: true,
+      show_detail: false,
       basket_sum: 0,
       products: [],
       categories: [],
@@ -279,6 +294,10 @@ export default {
 .list-item:not([class*="u-align-"]),
 .u-container-style:not([class*="u-align-"]) {
   text-align: left;
+}
+.product-img {
+  cursor: pointer;
+  zoom: 0.2;
 }
 /* Spacer */
 .list-spacer {
