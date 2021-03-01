@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <flash-message class="flashMessages"></flash-message>
     <v-app>
       <router-view></router-view>
     </v-app>

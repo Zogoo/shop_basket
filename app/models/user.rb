@@ -8,6 +8,9 @@ class User < ApplicationRecord
 
   mount_uploader :icon, ImageUploader
   enum status: %i[active pending suspended]
+  has_many :baskets
+  has_many :orders
+  has_one :merchant
 
   def self.find_for_oauth(auth)
     user = User.where(uid: auth.uid, provider: auth.provider).first

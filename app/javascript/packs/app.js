@@ -7,16 +7,14 @@
 
 import Vue from 'vue'
 import App from '../App.vue'
-import router from "./routes";
+import router from "../common/routes";
 import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.min.css";
-import VueFlashMessage from "vue-flash-message";
 import Vuex from "vuex";
 
 document.addEventListener('DOMContentLoaded', () => {
   Vue.use(Vuex);
   Vue.use(Vuetify);
-  Vue.use(VueFlashMessage);
   const vuetify = new Vuetify();
 
   Vue.config.productionTip = process.env.NODE_ENV == "production";

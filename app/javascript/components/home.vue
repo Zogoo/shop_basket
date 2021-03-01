@@ -4,7 +4,7 @@
       <div class="head-text sans_font line-spacer">Product list</div>
       <div class="search-bar line-spacer">
         <input v-on:keyup.enter="search()" v-model="keyword"/>
-        <button v-on:click="search()"><i class="fa fa-search" aria-hidden="true"></i>Search</button>
+        <button v-on:click="search()" class="rounded-lg"><i class="fa fa-search" aria-hidden="true"></i>Search</button>
       </div>
       <div class="icon-list">
         <div class="icon" v-for="category in categories" :key="category.id" v-on:click="search_by_category(category.name)">
@@ -28,7 +28,9 @@
       </div>
     </div>
     <div class="float-in-right-corner">
-      <div class="shopping-cart"></div>
+      <router-link to="/basket">
+        <div class="shopping-cart"></div>
+      </router-link>
       <div class="cart-text">
         COUNT: {{ basket_count }}
       </div>
@@ -40,7 +42,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from '../common/axios.js';
 import BasketManager from '../common/BasketManager.js';
 import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
@@ -56,7 +58,7 @@ export default {
     }
   },
   mounted (){
-    axios.get('/home/all').then((response) => {
+    axios.get('/api/v1/products/all').then((response) => {
       this.products   = response.data.products;
       this.categories = response.data.categories;
       this.basket     = BasketManager.read() || response.data.basket;
@@ -72,12 +74,12 @@ export default {
   },
   methods: {
     search: function() {
-      axios.post('/home/search', { keyword: this.keyword }).then((response) => {
+      axios.post('/api/v1/products/search', { keyword: this.keyword }).then((response) => {
         this.products = response.data.products;
       })
     },
     search_by_category: function(category_name) {
-      axios.post('/home/search', { category: category_name }).then((response) => {
+      axios.post('/api/v1/products/search', { category: category_name }).then((response) => {
         this.products = response.data.products;
       })
     },

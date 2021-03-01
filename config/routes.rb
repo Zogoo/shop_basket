@@ -6,23 +6,19 @@ Rails.application.routes.draw do
     omniauth_callbacks: 'users/omniauth_callbacks'
   }
 
-  namespace :users do
-    get 'basket/show'
-    get 'basket/create'
-    get 'basket/add'
-    get 'basket/delete'
-    get 'basket/clean'
+  namespace :api do
+    namespace :v1 do
+      get 'basket/show'
+      get 'basket/create'
+      get 'basket/add'
+      get 'basket/delete'
+      get 'basket/clean'
+      get 'my_page/index'
+      get 'my_page/checked'
+      get 'products/all'
+      post 'products/search'
+    end
   end
 
-  namespace :users do
-    get 'my_page/index'
-    get 'my_page/checked'
-  end
-
-  # Home controller
-  get 'home/index'
-  get 'home/all'
-  post 'home/search'
-  get 'home/category'
-  get 'home/suggestion'
+  get '*path', to: 'home#index'
 end
