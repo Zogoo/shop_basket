@@ -11,22 +11,88 @@
         />
       </div>
       <div class="icon-list">
-        <div class="icon" v-for="category in categories" :key="category.id" v-on:click="search_by_category(category.name)">
-          <div :class="'category-icons icon-' + [category.name.toLowerCase()]"/>
-          <span>{{ category.name }}</span>
-        </div>
+        <v-card-text>
+          <v-chip-group
+            v-model="selection"
+            active-class="green accent-4 white--text"
+            column
+          >
+            <v-chip class="icon" v-for="category in categories" :key="category.id" v-on:click="search_by_category(category.name)">
+              <div :class="'category-icons icon-' + [category.name.toLowerCase()]"/>
+              <span>{{ category.name }}</span>
+            </v-chip>
+          </v-chip-group>
+        </v-card-text>
       </div>
       <div class="product-width list list-spacer">
         <div v-for="product in products" :key="product.id" class="list-item">
-          <div class="internal-spacer">
-            <img v-bind:src="product.product_image[0].image.url"
-              alt="" class="product-width" data-image-width="1900"
-              data-image-height="2532">
-            <div class="description grid-line">
-              <div class="sans_font first-row">{{ product.name }}</div>
-              <div class="sans_font second-row">$ {{ product.price }}</div>
-              <div class="basket-icon merged-row" v-on:click="add_into_basket(product)"></div>
-            </div>
+        <div class="internal-spacer">
+            <v-card
+              :loading="loading"
+              class="mx-auto"
+              max-width="374"
+            >
+              <template slot="progress">
+                <v-progress-linear
+                  color="deep-purple"
+                  height="10"
+                  indeterminate
+                ></v-progress-linear>
+              </template>
+              <v-img
+                height="250"
+                zoom="0.2"
+                :src="product.product_image[0].image.url"
+              ></v-img>
+              <v-card-title>{{ product.name }}</v-card-title>
+              <v-card-text>
+                <v-row
+                  align="center"
+                  class="mx-0"
+                >
+                  <v-rating
+                    :value="4.5"
+                    color="amber"
+                    dense
+                    half-increments
+                    readonly
+                    size="14"
+                  ></v-rating>
+                  <div class="grey--text ml-4">
+                    4.5 (413)
+                  </div>
+                </v-row>
+                <div class="my-4 subtitle-1">
+                  $ • {{product.price}}
+                </div>
+                <div>{{product.description}}</div>
+              </v-card-text>
+          
+              <v-divider class="mx-4"></v-divider>
+              <v-card-title>Other information</v-card-title>
+              <v-card-text>
+                <v-chip-group
+                  v-model="selection"
+                  active-class="deep-purple accent-4 white--text"
+                  column
+                >
+                  <v-chip>Too: {{product.stock}}</v-chip>
+                  <v-chip>Hurgelt: {{product.delivery_period}}</v-chip>
+                  <v-chip>Hurgelt torol: {{product.delivery_type}}</v-chip>
+                  <v-chip>Hemjee] {{product.dimensions}} gr</v-chip>
+                </v-chip-group>
+              </v-card-text>
+          
+              <v-card-actions>
+                <v-btn
+                  color="deep-purple lighten-2"
+                  text
+                  @click="reserve"
+                >
+                  <div class="basket-icon merged-row" v-on:click="add_into_basket(product)"></div>
+                </v-btn>
+              </v-card-actions>
+            </v-card>
           </div>
         </div>
       </div>
