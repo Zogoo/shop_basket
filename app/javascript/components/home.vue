@@ -3,8 +3,12 @@
     <div class="product-list">
       <div class="head-text sans_font line-spacer">Product list</div>
       <div class="search-bar line-spacer">
-        <input v-on:keyup.enter="search()" v-model="keyword"/>
-        <button v-on:click="search()" class="rounded-lg"><i class="fa fa-search" aria-hidden="true"></i>Search</button>
+        <v-text-field
+          v-model="keyword"
+          label="What are you working on?"
+          solo
+          @keydown.enter="search()"
+        />
       </div>
       <div class="icon-list">
         <div class="icon" v-for="category in categories" :key="category.id" v-on:click="search_by_category(category.name)">
@@ -246,6 +250,7 @@ export default {
 	width: 251px;
 	height: 250px;
   zoom: 0.2;
+  cursor: pointer;
 }
 /* Category list */
 .icon-list {

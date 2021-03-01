@@ -76,8 +76,9 @@ export default {
     },
 
     deleteItemConfirm () {
-      this.basket.splice(this.editedIndex, 1)
-      this.closeDelete()
+      this.basket.splice(this.editedIndex, 1);
+      BasketManager.add(this.basket);
+      this.closeDelete();
     },
     closeDelete () {
       this.dialogDelete = false
