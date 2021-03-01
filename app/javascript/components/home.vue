@@ -41,6 +41,7 @@
 
 <script>
 import axios from 'axios';
+import BasketManager from '../common/BasketManager.js';
 import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
 
@@ -58,7 +59,7 @@ export default {
     axios.get('/home/all').then((response) => {
       this.products   = response.data.products;
       this.categories = response.data.categories;
-      this.basket     = response.data.basket;
+      this.basket     = BasketManager.read() || response.data.basket;
     })
   },
   computed: {
@@ -82,6 +83,7 @@ export default {
     },
     add_into_basket: function(product) {
       this.basket.push(product);
+      BasketManager.add(this.basket);
     }
   }
 }
