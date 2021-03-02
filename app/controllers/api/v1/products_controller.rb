@@ -23,10 +23,10 @@ class Api::V1::ProductsController < ApplicationController
   private
 
   def keyword_param
-    params.permit(:keyword).dig(:keyword)
+    params.permit(:keyword)[:keyword]
   end
 
   def category_param
-    params.permit(:category).dig(:category)
+    params.permit(:category)[:category]
   end
 end

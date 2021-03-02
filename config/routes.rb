@@ -17,6 +17,10 @@ Rails.application.routes.draw do
       get 'my_page/checked'
       get 'products/all'
       post 'products/search'
+      get 'order/all'
+      post 'order/add'
+      get 'order/show'
+      post 'order/cancel'
     end
   end
 
