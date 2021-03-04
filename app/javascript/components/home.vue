@@ -41,9 +41,24 @@
               </template>
               <v-img
                 height="250"
+                class="product-img"
                 :src="product.product_image[0].image.url"
+                :lazy-src="product.product_image[0].image.url"
                 @click="show_detail = !show_detail"
-              ></v-img>
+              >
+                <template v-slot:placeholder>
+                  <v-row
+                    class="fill-height ma-0"
+                    align="center"
+                    justify="center"
+                  >
+                    <v-progress-circular
+                      indeterminate
+                      color="grey lighten-5"
+                    ></v-progress-circular>
+                  </v-row>
+                </template>
+              </v-img>
               <v-card-title>{{ product.name }}</v-card-title>
               <v-card-text>
                 <v-row
@@ -65,31 +80,25 @@
                 <div class="my-4 subtitle-1">
                   $ • {{product.price}}
                 </div>
-                <div>{{product.description}}</div>
+                <div class="description">{{product.description}}</div>
               </v-card-text>
           
               <v-divider class="mx-4"></v-divider>
               <v-card-title>Other information</v-card-title>
               <v-card-text>
-                <v-chip-group
-                  v-model="selection"
-                  active-class="deep-purple accent-4 white--text"
-                  column
-                >
-                  <v-chip>Too: {{product.stock}}</v-chip>
-                  <v-chip>Hurgelt: {{product.delivery_period}}</v-chip>
-                  <v-chip>Hurgelt torol: {{product.delivery_type}}</v-chip>
-                  <v-chip>Hemjee] {{product.dimensions}} gr</v-chip>
-                </v-chip-group>
+                <div>Too: {{product.stock}}</div>
+                <div>Hemjee: {{product.dimensions}} gr</div>
+                <div>Hurgelt torol: {{product.delivery_type}}</div>
+                <div>Hurgelt: {{product.delivery_period}} odor</div>
               </v-card-text>
           
               <v-card-actions>
                 <v-btn
                   color="deep-purple lighten-2"
                   text
-                  @click="reserve"
+                  @click="add_into_basket(product)"
                 >
-                  <div class="basket-icon merged-row" v-on:click="add_into_basket(product)"></div>
+                  <div class="basket-icon merged-row"></div>
                 </v-btn>
               </v-card-actions>
             </v-card>
@@ -109,17 +118,16 @@
       </div>
     </div>
     <v-overlay
-      :absolute="absolute"
+      :z-index="0"
       :value="show_detail"
     >
-<!-- TODO: Floating detail screen -->
-          <v-btn
-            color="success"
-            class="mt-12"
-            @click="show_detail = false"
-          >
-            BACK TO LIST
-          </v-btn>
+      <v-btn
+        color="success"
+        class="mt-12"
+        @click="show_detail = false"
+      >
+        BACK TO LIST
+      </v-btn>
     </v-overlay>
   </div>
 </template>
@@ -133,7 +141,8 @@ import '@fortawesome/fontawesome-free/js/all.js'
 export default {
   data: function () {
     return {
-      absolute: true,
+      loading: false,
+      selection: '',
       show_detail: false,
       basket_sum: 0,
       products: [],
@@ -297,7 +306,13 @@ export default {
 }
 .product-img {
   cursor: pointer;
-  zoom: 0.2;
+  margin: 5px;
+}
+.description {
+  height: 100px;
+  padding: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 /* Spacer */
 .list-spacer {
