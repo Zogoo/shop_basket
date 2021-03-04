@@ -22,6 +22,8 @@
               column
             >
               <v-chip
+              filter
+              label
               text-color="white"
               class="ma-2 icon-spacer"
               v-for="category in categories" 
@@ -64,7 +66,7 @@
                     >
                       <v-progress-circular
                         indeterminate
-                        color="grey lighten-5"
+                        color="grey lighten-2"
                       ></v-progress-circular>
                     </v-row>
                   </template>
@@ -107,13 +109,13 @@
                     text
                     @click="add_into_basket(product)"
                   >
-                    <v-icon large color="blue-grey lighen-5">mdi-basket-plus</v-icon>
+                    <v-icon large color="blue-grey lighten-2">mdi-basket-plus</v-icon>
                   </v-btn>
                   <v-btn
                     text
                     @click="remove_from_basket(product)"
                   >
-                    <v-icon large color="blue-grey lighen-5">mdi-basket-remove</v-icon>
+                    <v-icon large color="blue-grey lighten-2">mdi-basket-remove</v-icon>
                   </v-btn>
                 </v-card-actions>
               </v-card>
@@ -124,7 +126,7 @@
     </v-sheet>
     <div class="float-in-right-corner">
       <router-link to="/basket">
-        <div class="shopping-cart"></div>
+        <v-icon large color="blue-grey lighten-5">mdi-basket</v-icon>
       </router-link>
       <div class="cart-text">
         COUNT: {{ basket_count }}
@@ -199,9 +201,11 @@ export default {
     },
     remove_from_basket: function(product) {
       let basket_obj = this.basket.find((p) => p.id == product.id);
-      let basket_index = this.basket.indexOf(basket_obj);
-      this.basket.splice(basket_index, 1);
-      BasketManager.add(this.basket);
+      if(!!basket_obj){
+        let basket_index = this.basket.indexOf(basket_obj);
+        this.basket.splice(basket_index, 1);
+        BasketManager.add(this.basket);
+      }
     }
   }
 }
@@ -366,13 +370,6 @@ export default {
 .grid-line .merged-row {
   grid-row: 1/2;
   grid-column: 2/2;
-}
-.basket-icon {
-  background: url('/assets/shop-icons-white.png') no-repeat -616px -316px;
-	width: 251px;
-	height: 250px;
-  zoom: 0.2;
-  cursor: pointer;
 }
 /* Category list */
 .icon-list {
