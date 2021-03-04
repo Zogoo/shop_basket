@@ -44,7 +44,7 @@ RUN bundle exec rake assets:precompile
 RUN chmod -R 755 /app/public
 
 # Main build
-FROM ruby:2.7.2-alpine3.13
+FROM ruby:2.7.0-alpine3.11
 
 ENV LANG=C.UTF-8
 ENV TZ=Asia/Ulaanbaatar

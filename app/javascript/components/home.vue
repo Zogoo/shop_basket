@@ -153,8 +153,6 @@
 <script>
 import axios from '../common/axios.js';
 import BasketManager from '../common/BasketManager.js';
-import '@fortawesome/fontawesome-free/css/all.css'
-import '@fortawesome/fontawesome-free/js/all.js'
 
 export default {
   data: function () {

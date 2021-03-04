@@ -2,3 +2,5 @@ node_modules
 test
 spec
 vendor/bundle
+Dockerfile
+docker-compose.yml

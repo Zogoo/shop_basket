@@ -17,7 +17,6 @@
   },
   "version": "0.1.0",
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^5.15.2",
     "deepmerge": "^4.2.2",
     "sass": "^1.32.8",
     "sass-loader": "^11.0.1",
