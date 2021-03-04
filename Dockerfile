@@ -1,5 +1,5 @@
 # build stage
-FROM ruby:2.7.2-alpine3.13 AS builder
+FROM ruby:2.7.0-alpine3.11 AS builder
 
 ENV LANG=C.UTF-8
 ENV TZ=Asia/Ulaanbaatar
