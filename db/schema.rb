@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 2021_02_24_141056) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
+    t.string "icon_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_categories_on_name", unique: true

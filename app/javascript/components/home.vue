@@ -1,111 +1,127 @@
 <template>
   <div id="app" class="align-center">
-    <div class="product-list">
-      <div class="head-text sans_font line-spacer">Product list</div>
-      <div class="search-bar line-spacer">
-        <v-text-field
-          v-model="keyword"
-          label="What are you working on?"
-          solo
-          @keydown.enter="search()"
-        />
-      </div>
-      <div class="icon-list">
-        <v-card-text>
-          <v-chip-group
-            v-model="selection"
-            active-class="green accent-4 white--text"
-            column
-          >
-            <v-chip class="icon" v-for="category in categories" :key="category.id" v-on:click="search_by_category(category.name)">
-              <div :class="'category-icons icon-' + [category.name.toLowerCase()]"/>
-              <span>{{ category.name }}</span>
-            </v-chip>
-          </v-chip-group>
-        </v-card-text>
-      </div>
-      <div class="product-width list list-spacer">
-        <div v-for="product in products" :key="product.id" class="list-item">
-        <div class="internal-spacer">
-            <v-card
-              :loading="loading"
-              class="mx-auto"
-              max-width="374"
+    <v-sheet
+      class="pa-12"
+      color="grey lighten-3"
+    >
+      <div class="product-list">
+        <div class="head-text sans_font line-spacer">Product list</div>
+        <div class="search-bar line-spacer">
+          <v-text-field
+            v-model="keyword"
+            label="What are you working on?"
+            solo
+            @keydown.enter="search()"
+          />
+        </div>
+        <div class="icon-list">
+          <v-card-text>
+            <v-chip-group
+              v-model="selection"
+              active-class="green ligther-10 white--text"
+              column
             >
-              <template slot="progress">
-                <v-progress-linear
-                  color="deep-purple"
-                  height="10"
-                  indeterminate
-                ></v-progress-linear>
-              </template>
-              <v-img
-                height="250"
-                class="product-img"
-                :src="product.product_image[0].image.url"
-                :lazy-src="product.product_image[0].image.url"
-                @click="show_detail = !show_detail"
+              <v-chip
+              text-color="white"
+              class="ma-2 icon-spacer"
+              v-for="category in categories" 
+              :key="category.name"
+              v-on:click="search_by_category(category.name)"
               >
-                <template v-slot:placeholder>
-                  <v-row
-                    class="fill-height ma-0"
-                    align="center"
-                    justify="center"
-                  >
-                    <v-progress-circular
-                      indeterminate
-                      color="grey lighten-5"
-                    ></v-progress-circular>
-                  </v-row>
+                <v-icon left large >mdi-{{category.icon_name.toLowerCase()}}</v-icon>
+                {{ category.name }}
+              </v-chip>
+            </v-chip-group>
+          </v-card-text>
+        </div>
+        <div class="product-width list list-spacer">
+          <div v-for="product in products" :key="product.id" class="list-item">
+          <div class="internal-spacer">
+              <v-card
+                :loading="loading"
+                class="mx-auto"
+                max-width="374"
+              >
+                <template slot="progress">
+                  <v-progress-linear
+                    color="deep-purple"
+                    height="10"
+                    indeterminate
+                  ></v-progress-linear>
                 </template>
-              </v-img>
-              <v-card-title>{{ product.name }}</v-card-title>
-              <v-card-text>
-                <v-row
-                  align="center"
-                  class="mx-0"
+                <v-img
+                  height="250"
+                  class="product-img"
+                  :src="product.product_image[0].image.url"
+                  :lazy-src="product.product_image[0].image.url"
+                  @click="show_detail = !show_detail"
                 >
-                  <v-rating
-                    :value="4.5"
-                    color="amber"
-                    dense
-                    half-increments
-                    readonly
-                    size="14"
-                  ></v-rating>
-                  <div class="grey--text ml-4">
-                    4.5 (413)
+                  <template v-slot:placeholder>
+                    <v-row
+                      class="fill-height ma-0"
+                      align="center"
+                      justify="center"
+                    >
+                      <v-progress-circular
+                        indeterminate
+                        color="grey lighten-5"
+                      ></v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
+                <v-card-title>{{ product.name }}</v-card-title>
+                <v-card-text>
+                  <v-row
+                    align="center"
+                    class="mx-0"
+                  >
+                    <v-rating
+                      :value="4.5"
+                      color="amber"
+                      dense
+                      half-increments
+                      readonly
+                      size="14"
+                    ></v-rating>
+                    <div class="grey--text ml-4">
+                      4.5 (413)
+                    </div>
+                  </v-row>
+                  <div class="my-4 subtitle-1">
+                    $ • {{product.price}}
                   </div>
-                </v-row>
-                <div class="my-4 subtitle-1">
-                  $ • {{product.price}}
-                </div>
-                <div class="description">{{product.description}}</div>
-              </v-card-text>
-          
-              <v-divider class="mx-4"></v-divider>
-              <v-card-title>Other information</v-card-title>
-              <v-card-text>
-                <div>Too: {{product.stock}}</div>
-                <div>Hemjee: {{product.dimensions}} gr</div>
-                <div>Hurgelt torol: {{product.delivery_type}}</div>
-                <div>Hurgelt: {{product.delivery_period}} odor</div>
-              </v-card-text>
-          
-              <v-card-actions>
-                <v-btn
-                  color="deep-purple lighten-2"
-                  text
-                  @click="add_into_basket(product)"
-                >
-                  <div class="basket-icon merged-row"></div>
-                </v-btn>
-              </v-card-actions>
-            </v-card>
+                  <div class="description">{{product.description}}</div>
+                </v-card-text>
+            
+                <v-divider class="mx-4"></v-divider>
+                <v-card-title>Other information</v-card-title>
+                <v-card-text>
+                  <div>Too: {{product.stock}}</div>
+                  <div>Hemjee: {{product.dimensions}} gr</div>
+                  <div>Hurgelt torol: {{product.delivery_type}}</div>
+                  <div>Hurgelt: {{product.delivery_period}} odor</div>
+                </v-card-text>
+            
+                <v-card-actions>
+                  <v-btn
+                    text
+                    @click="add_into_basket(product)"
+                  >
+                    <v-icon large color="blue-grey lighen-5">mdi-basket-plus</v-icon>
+                  </v-btn>
+                  <v-btn
+                    text
+                    @click="remove_from_basket(product)"
+                  >
+                    <v-icon large color="blue-grey lighen-5">mdi-basket-remove</v-icon>
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </v-sheet>
     <div class="float-in-right-corner">
       <router-link to="/basket">
         <div class="shopping-cart"></div>
@@ -179,6 +195,12 @@ export default {
     },
     add_into_basket: function(product) {
       this.basket.push(product);
+      BasketManager.add(this.basket);
+    },
+    remove_from_basket: function(product) {
+      let basket_obj = this.basket.find((p) => p.id == product.id);
+      let basket_index = this.basket.indexOf(basket_obj);
+      this.basket.splice(basket_index, 1);
       BasketManager.add(this.basket);
     }
   }
@@ -356,47 +378,14 @@ export default {
 .icon-list {
   display: inline-flex;
 }
-.icon-list .icon {
+.icon-list .icon-spacer {
   padding-right: 100px;
 }
 .category-icons {
   cursor: pointer;
   zoom: 0.2;
 }
-.icon-cosmetics {
-  background: url('/assets/shop-icons-white.png') no-repeat;
-  background-position: -2107px -616px;
-  width: 251px;
-	height: 250px;
-}
-.icon-baby {
-	background: url('/assets/shop-icons-white.png') no-repeat -616px -616px;
-	width: 251px;
-	height: 250px;
-}
-.icon-food {
-	background: url('/assets/shop-icons-white.png') no-repeat -914px -1516px;
-	width: 251px;
-	height: 251px;
-}
-.icon-drink {
-	background: url('/assets/shop-icons-white.png') no-repeat -1808px -916px;
-	width: 251px;
-	height: 250px;
-}
-.icon-accessories {
-	background: url('/assets/shop-icons-white.png') no-repeat -2703px -616px;
-	width: 251px;
-	height: 250px;
-}
 /* Shopping basket */
-.shopping-cart {
-  background: url('/assets/shop-icons-white.png') no-repeat -2703px -16px;
-	width: 251px;
-	height: 250px;
-  zoom: 0.45;
-  cursor: pointer;
-}
 .float-in-right-corner {
   position: fixed;
   top: 80vh;
