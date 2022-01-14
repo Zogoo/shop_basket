@@ -1,4 +1,6 @@
 class Api::V1::ProductsController < ApplicationController
+  skip_forgery_protection
+
   def all
     categories = Category.all
     products = JSON.parse(Product.all.to_json(include: :product_image))
